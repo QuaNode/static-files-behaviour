@@ -1,0 +1,30 @@
+{
+  "name": "static-files-behaviour",
+  "version": "1.0.0",
+  "description": "A behavior used with BeamJS framework to serve static files.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "peerDependencies": {
+    "beamjs": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quaNode/static-files-behaviour.git"
+  },
+  "keywords": [
+    "static",
+    "files",
+    "nodejs",
+    "beamjs",
+    "behaviour",
+    "behavior"
+  ],
+  "author": "Ahmed Ragab <ahmed.ragab@me.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/quaNode/static-files-behaviour/issues"
+  },
+  "homepage": "https://github.com/quaNode/static-files-behaviour#readme"
+}
