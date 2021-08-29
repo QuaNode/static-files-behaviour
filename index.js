@@ -76,9 +76,8 @@ module.exports = function (options) {
         if (folder) {
 
           var root = !components || components.length < 2 || components[1] == '';
-          path = (!root ? components.join('/') : '') + index;
+          path = (!root ? path.split('?')[0] : '') + index;
         }
-        path = path.split('?')[0];
         self.begin('ErrorHandling', function (key, businessController, operation) {
 
           operation.error(function (e) {
