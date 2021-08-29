@@ -71,8 +71,9 @@ module.exports = function (options) {
         if (!folder) {
 
           components = path.split('/');
-          components.push(components.pop().split('?')[0]);
-          folder = path.split('/').pop().split('.').length < 2;
+          var last = components.pop().split('?')[0];
+          components.push(last);
+          folder = last.split('.').length < 2;
         }
         if (folder) {
 
