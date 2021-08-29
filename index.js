@@ -71,13 +71,15 @@ module.exports = function (options) {
         if (!folder) {
 
           components = path.split('/');
+          components.push(components.pop().split('?')[0]);
           folder = path.split('/').pop().split('.').length < 2;
         }
         if (folder) {
 
           var root = !components || components.length < 2 || components[1] == '';
-          path = (!root ? path.split('?')[0] : '') + index;
+          path = (!root ? components.join('/') : '') + index;
         }
+        path = path.split('?')[0];
         self.begin('ErrorHandling', function (key, businessController, operation) {
 
           operation.error(function (e) {
