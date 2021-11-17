@@ -31,7 +31,7 @@ module.exports = function (options) {
       method: 'GET',
       type: 'integration',
       fetcher: behaviour_options.name,
-      storage: 'local',
+      storage: behaviour_options.storage || 'local',
       queue: behaviour_options.queue || function (name, parameters) {
 
         return parameters.filePath || name;
@@ -42,6 +42,11 @@ module.exports = function (options) {
 
           key: 'url',
           type: 'middleware'
+        },
+        ranges: {
+
+          key: 'range',
+          type: 'header'
         }
       },
       returns: {
@@ -53,9 +58,18 @@ module.exports = function (options) {
         filename: {
 
           type: 'body'
+        },
+        stats: {
+
+          type: 'body'
         }
       },
-      plugin: responder('stream')
+      plugin: responder('stream', {
+
+        acceptRanges: true,
+        lastModified: true,
+        etag: true
+      })
     }, function (init) {
 
       return function () {
@@ -65,6 +79,7 @@ module.exports = function (options) {
         var error = null;
         var ignore = false;
         var stream = null;
+        var stats = null;
         var components = null;
         var path = self.parameters.filePath;
         var folder = typeof path !== 'string' || path.length === 0;
@@ -92,7 +107,8 @@ module.exports = function (options) {
 
           operation.resource({
 
-            path: behaviour_options.directory + path
+            path: behaviour_options.directory + path,
+            ranges: self.parameters.ranges
           }).stream(function () {
 
             return function (resource_stream) {
@@ -102,6 +118,7 @@ module.exports = function (options) {
           }).callback(function (resource, e) {
 
             if (e) error = e;
+            if (resource) stats = resource.stats;
           }).apply();
         }).use(function (key, businessController, next) {
 
@@ -124,6 +141,7 @@ module.exports = function (options) {
 
             response.stream = stream;
             response.filename = path.split('/').pop();
+            response.stats = stats;
           }).apply();
         }).when('ModelObjectMapping');
       };
