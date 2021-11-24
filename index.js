@@ -28,6 +28,7 @@ module.exports = function (options) {
       name: behaviour_options.name,
       version: behaviour_options.version || '1',
       path: behaviour_options.path || '/*',
+      host: behaviour_options.host,
       method: 'GET',
       type: 'integration',
       fetcher: behaviour_options.name,
