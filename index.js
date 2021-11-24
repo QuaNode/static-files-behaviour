@@ -87,7 +87,10 @@ module.exports = function (options) {
         if (!folder) {
 
           components = path.split('/');
-          var last = components.pop().split('?')[0];
+          var last = (components.splice(components.findIndex(function (component) {
+
+            return component.indexOf('?') > -1;
+          })).shift() || components.pop()).split('?')[0];
           components.push(last);
           folder = last.split('.').length < 2;
         }
@@ -125,7 +128,7 @@ module.exports = function (options) {
 
           if (error && folder && path != index) self.run(behaviour_options.name, {
 
-            url: index
+            filePath: index
           }, function (response, e) {
 
             ignore = !!response && !e;
