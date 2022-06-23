@@ -1,6 +1,6 @@
 {
   "name": "static-files-behaviour",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "A behavior used with BeamJS framework to serve static files.",
   "main": "index.js",
   "scripts": {

@@ -67,6 +67,7 @@ module.exports = function (options) {
       },
       plugin: responder('stream', {
 
+        cacheControl: true,
         acceptRanges: true,
         lastModified: true,
         etag: true
