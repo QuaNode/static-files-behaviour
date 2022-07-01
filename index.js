@@ -67,6 +67,8 @@ module.exports = function (options) {
       },
       plugin: responder('stream', {
 
+        immutable: true,
+        maxAge: '1y',
         cacheControl: true,
         acceptRanges: true,
         lastModified: true,
