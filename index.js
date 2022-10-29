@@ -33,8 +33,10 @@ module.exports = function (options) {
       type: 'integration',
       fetcher: behaviour_options.name,
       storage: behaviour_options.storage || 'local',
+      timeout: 50,
       queue: behaviour_options.queue || function (name, parameters) {
 
+        if (parameters.path.toLowerCase().endsWith('.html')) return;
         return parameters.filePath || name;
       },
       parameters: {
@@ -103,6 +105,7 @@ module.exports = function (options) {
           path = (!root ? components.join('/') : '') + index;
         }
         path = path.split('?')[0];
+        self.parameters.path = path;
         self.begin('ErrorHandling', function (key, businessController, operation) {
 
           operation.error(function (e) {
@@ -149,6 +152,7 @@ module.exports = function (options) {
             response.stream = stream;
             response.filename = path.split('/').pop();
             response.stats = stats;
+            response.cache = !response.filename.toLowerCase().endsWith('.html');
           }).apply();
         }).when('ModelObjectMapping');
       };
