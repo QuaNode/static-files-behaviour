@@ -36,7 +36,11 @@ module.exports = function (options) {
       timeout: 50,
       queue: behaviour_options.queue || function (name, parameters) {
 
-        if (parameters.path.toLowerCase().endsWith('.html')) return;
+        if (['.html', '.js', '.css', '.woff', '.woff2', '.ttf', '.eot',
+          '.svg', '.jpg', '.png', '.gif'].some(function (ext) {
+
+            return parameters.path.toLowerCase().endsWith(ext);
+          })) return;
         return parameters.filePath || name;
       },
       parameters: {
@@ -104,8 +108,7 @@ module.exports = function (options) {
           var root = !components || components.length < 2 || components[1] == '';
           path = (!root ? components.join('/') : '') + index;
         }
-        path = path.split('?')[0];
-        self.parameters.path = path;
+        path = self.parameters.path = path.split('?')[0];
         self.begin('ErrorHandling', function (key, businessController, operation) {
 
           operation.error(function (e) {
